@@ -1,6 +1,6 @@
 require_relative "recipient"
 
-CONVERSATIONS_URL = "https://slack.com/api/users.list"
+CONVERSATIONS_URL = "https://slack.com/api/conversations.list"
 
 class Channel < Recipient
   attr_reader :id, :name, :topic, :member_count

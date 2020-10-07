@@ -19,9 +19,9 @@ def main
     case input
 
     when "list users"
-      return workspace.users
+      puts workspace.users
     when "list channels"
-      return workspace.channels
+      puts workspace.channels
     when "quit"
       puts "Thank you for using the Ada Slack CLI...exiting."
       exit

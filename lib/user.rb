@@ -5,7 +5,7 @@ USERS_URL = "https://slack.com/api/users.list"
 class User < Recipient
   attr_reader :id, :name
 
-  def initialize(id:, name: nil, real_name: nil)
+  def initialize(id:, name:, real_name: nil)
     super(id, name)
 
     @real_name = real_name

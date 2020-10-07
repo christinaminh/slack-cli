@@ -27,4 +27,11 @@ class Channel < Recipient
 
     return channels_list
   end
+
+  def details
+    return "Slack ID: #{self.id}
+    Name: #{self.name}
+    Topic: #{self.topic}
+    Member count: #{self.member_count}"
+  end
 end

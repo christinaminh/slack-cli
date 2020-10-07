@@ -3,10 +3,13 @@ require_relative "recipient"
 CONVERSATIONS_URL = "https://slack.com/api/users.list"
 
 class Channel < Recipient
-  attr_reader :id, :name
+  attr_reader :id, :name, :topic, :member_count
 
-  def initialize(id:, name: nil, topic: nil, member_count: nil)
+  def initialize(id:, name:, topic: nil, member_count: nil)
     super(id, name)
+
+    @topic = topic
+    @member_count = member_count
   end
 
 

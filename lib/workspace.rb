@@ -1,6 +1,5 @@
-
-
-CONVERSATIONS_URL = "https://slack.com/api/conversations.list"
+require_relative 'user'
+require_relative 'channel'
 
 
 class Workspace

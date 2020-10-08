@@ -4,22 +4,28 @@ require 'table_print'
 require_relative 'workspace'
 
 def find(dataset, workspace)
+
   print "Would you like to enter a name or id? "
   input = gets.chomp.downcase
+
+  until input == "name"|| input == "id"
+    puts "Please enter 'name' or 'id': "
+    input = gets.chomp.downcase
+  end
+
   if input == "name"
     print "Enter name: "
     input = gets.chomp.downcase
 
-    puts workspace.select(dataset: dataset ,name: input)
+    return workspace.select(dataset: dataset ,name: input)
   elsif input == "id"
     print "Enter id: "
     input = gets.chomp.upcase
 
-    puts workspace.select(dataset: dataset ,id: input)
+    return workspace.select(dataset: dataset ,id: input)
   end
-
-  rescue ArgumentError => error_message
-    puts "Encountered an error: #{error_message}"
+rescue ArgumentError => error_message
+  puts "Encountered an error: #{error_message}\n\n"
 end
 
 def main
@@ -27,7 +33,7 @@ def main
   workspace = Workspace.new
 
   while true
-    puts "What would you like to do?
+    puts "\nWhat would you like to do?
     - LIST USERS
     - LIST CHANNELS
     - SELECT USER
@@ -39,22 +45,30 @@ def main
     input = gets.chomp.downcase
 
     case input
-
     when "list users"
       tp workspace.users, "id", "name", "real_name"
+
     when "list channels"
       tp workspace.channels, "id", "name", "topic", "member_count"
+
     when "select user"
       selected = find(workspace.users, workspace)
-      print selected.name
+      puts selected.name if selected
+
     when "select channel"
       selected= find(workspace.channels, workspace)
-      print selected.name
+      puts selected.name if selected
+
     when "details"
-      puts selected.details
+      begin
+        puts workspace.show_details(selected)
+      rescue ArgumentError => error_message
+        print "No user or channel selected."
+      end
     when "quit"
       puts "Thank you for using the Ada Slack CLI...exiting."
       exit
+
     else
       puts "Invalid choice."
     end

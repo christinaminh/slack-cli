@@ -33,7 +33,7 @@ describe "Workspace class" do
 
     it "contains correct number of users instances" do
       num_of_users = @workspace.users.length
-      expected_num_of_users = 158
+      expected_num_of_users = 162
 
       expect(num_of_users).must_equal expected_num_of_users
     end
@@ -82,5 +82,18 @@ describe "Workspace class" do
         @workspace.select(dataset: @channels, name: "nonsense_name")
       }.must_raise ArgumentError
     end
+  end
+
+  describe "show details" do
+    it "returns details" do
+      details = @workspace.show_details(@users[1])
+
+      # expect(details).must_be_kind_of String
+      # expect(@users[1]).must_be_kind_of User
+      # expect(@users[1]).must_be_instance_of User
+      # expect(user.class).must_be_kind_of User
+      expect(details).must_include "U015QQ2BXFZ" && "jane" && "Jane Park"
+    end
+
   end
 end

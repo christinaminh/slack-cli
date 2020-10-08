@@ -15,10 +15,15 @@ class Workspace
       user.id == id || user.name == name
     end
 
-    raise ArgumentError.new ("Error: User not found.") if match == nil && dataset == users
-    raise ArgumentError.new ("Error: Channel not found.") if match == nil && dataset  == channels
+    raise ArgumentError.new ("User not found.") if match == nil && dataset == users
+    raise ArgumentError.new ("Channel not found.") if match == nil && dataset  == channels
 
     return match
   end
 
+  def show_details(instance)
+    raise ArgumentError.new ("Parameter must be instance of 'User' or 'Channel'.") unless instance.class == User || instance.class == Channel
+
+    return instance.details
+  end
 end

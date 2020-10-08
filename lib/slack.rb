@@ -17,9 +17,9 @@ def find(dataset, workspace)
 
     puts workspace.select(dataset: dataset ,id: input)
   end
+
   rescue ArgumentError => error_message
     puts "Encountered an error: #{error_message}"
-
 end
 
 def main

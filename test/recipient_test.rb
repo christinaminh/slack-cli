@@ -2,7 +2,12 @@ require_relative 'test_helper'
 
 describe "Recipient class" do
   before do
-    @recipient = Recipient.new("some_id", "some_name")
+    VCR.use_cassette("load workspace") do
+      @workspace = Workspace.new
+      @channels = @workspace.channels
+      @users = @workspace.users
+      @recipient = Recipient.new("some_id", "some_name")
+    end
   end
 
   describe "initialize" do
@@ -26,6 +31,30 @@ describe "Recipient class" do
     end
   end
 
+  describe "send_message(message)" do
+    it "can send a message to recipient" do
+      VCR.use_cassette("send_message") do
+        test_channel2 = @workspace.select(dataset: @channels, id: "C01ABK51G14")
+        post_response = test_channel2.send_message("helloooo")
+
+        expect(post_response).must_equal true
+
+        christina = @workspace.select(dataset: @users, name: "christina.minh")
+        post_response = christina.send_message("helloooo")
+
+        expect(post_response).must_equal true
+      end
+    end
+
+    it "will raise an ArgumentError if message is an empty string" do
+      VCR.use_cassette("nil message") do
+        expect{
+          @recipient.send_message(nil)
+        }.must_raise ArgumentError
+      end
+    end
+  end
+
   describe "details" do
     it "raises an error if invoked directly (without subclassing)" do
       expect {
@@ -41,5 +70,7 @@ describe "Recipient class" do
       }.must_raise NotImplementedError
     end
   end
+
+
 
 end

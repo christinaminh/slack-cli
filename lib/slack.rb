@@ -39,6 +39,7 @@ def main
     - SELECT USER
     - SELECT CHANNEL
     - DETAILS
+    - SEND MESSAGE
     - QUIT
 
     Please enter a request:"

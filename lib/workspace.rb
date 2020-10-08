@@ -26,4 +26,10 @@ class Workspace
 
     return instance.details
   end
+
+  def send_message(instance, message)
+    raise ArgumentError.new ("Parameter must be instance of 'User' or 'Channel'.") unless instance.class == User || instance.class == Channel
+
+    return instance.send_message(message)
+  end
 end

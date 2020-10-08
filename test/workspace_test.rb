@@ -40,7 +40,7 @@ describe "Workspace class" do
 
     it "contains correct number of channel instances" do
       num_of_channels = @workspace.channels.length
-      expected_num_of_channels = 47
+      expected_num_of_channels = 48
 
       expect(num_of_channels).must_equal expected_num_of_channels
     end
@@ -88,12 +88,40 @@ describe "Workspace class" do
     it "returns details" do
       details = @workspace.show_details(@users[1])
 
-      # expect(details).must_be_kind_of String
-      # expect(@users[1]).must_be_kind_of User
-      # expect(@users[1]).must_be_instance_of User
-      # expect(user.class).must_be_kind_of User
+      expect(details).must_be_kind_of String
       expect(details).must_include "U015QQ2BXFZ" && "jane" && "Jane Park"
     end
 
+    it "will raise an ArgumentError if no class instance is passed" do
+      expect{
+        @workspace.show_details("String")
+      }.must_raise ArgumentError
+    end
+  end
+
+  # Cases where message is nil or user/channel doesn't exist has been tested in recipient_test.rb
+  describe "send_message(instance, message)" do
+
+    it "send a message to the correct user/channel" do
+      VCR.use_cassette("Workspace_send_message") do
+        test_channel2 = @workspace.select(dataset: @channels, id: "C01ABK51G14")
+        channel_post_response = @workspace.send_message(test_channel2,"helloooo")
+
+        expect(channel_post_response).must_equal true
+
+        christina = @workspace.select(dataset: @users, name: "christina.minh")
+        user_post_response = @workspace.send_message(christina, "helloooo")
+
+        expect(user_post_response).must_equal true
+      end
+    end
+
+    it "raises ArgumentError if instance isn't of User or Channel" do
+      VCR.use_cassette("bad_recipient") do
+        expect{
+          @workspace.send_message("String", "Some message")
+        }.must_raise ArgumentError
+      end
+    end
   end
 end

@@ -63,7 +63,7 @@ def main
     when "details"
       begin
         puts workspace.show_details(selected)
-      rescue ArgumentError => error_message
+      rescue ArgumentError
         print "No user or channel selected."
       end
     when "quit"

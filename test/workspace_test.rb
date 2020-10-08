@@ -92,9 +92,15 @@ describe "Workspace class" do
       expect(details).must_include "U015QQ2BXFZ" && "jane" && "Jane Park"
     end
 
-    it "will raise an ArgumentError if no class instance is passed" do
+    it "will raise an ArgumentError if no User/Channel instance is passed" do
       expect{
         @workspace.show_details("String")
+      }.must_raise ArgumentError
+    end
+
+    it "will raise an ArgumentError if User/Channel instance is nil" do
+      expect{
+        @workspace.show_details(nil)
       }.must_raise ArgumentError
     end
   end

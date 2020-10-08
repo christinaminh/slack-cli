@@ -32,6 +32,7 @@ def main
     - LIST CHANNELS
     - SELECT USER
     - SELECT CHANNEL
+    - DETAILS
     - QUIT
 
     Please enter a request:"
@@ -44,9 +45,13 @@ def main
     when "list channels"
       tp workspace.channels, "id", "name", "topic", "member_count"
     when "select user"
-      puts find(workspace.users, workspace)
+      selected = find(workspace.users, workspace)
+      print selected.name
     when "select channel"
-      puts find(workspace.channels, workspace)
+      selected= find(workspace.channels, workspace)
+      print selected.name
+    when "details"
+      puts selected.details
     when "quit"
       puts "Thank you for using the Ada Slack CLI...exiting."
       exit

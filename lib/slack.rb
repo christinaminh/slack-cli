@@ -4,7 +4,6 @@ require 'table_print'
 require_relative 'workspace'
 
 def find(dataset, workspace)
-
   print "Would you like to enter a name or id? "
   input = gets.chomp.downcase
 
@@ -14,22 +13,29 @@ def find(dataset, workspace)
   end
 
   if input == "name"
-    print "Enter name: "
+    if dataset[0].instance_of? User
+      print "Enter username: "
+    elsif dataset[0].instance_of? Channel
+      print"Enter channel name: "
+    end
+
     input = gets.chomp.downcase
 
     return workspace.select(dataset: dataset ,name: input)
+
   elsif input == "id"
     print "Enter id: "
     input = gets.chomp.upcase
 
     return workspace.select(dataset: dataset ,id: input)
   end
-rescue ArgumentError => error_message
-  puts "Encountered an error: #{error_message}\n\n"
+
+  rescue ArgumentError => error_message
+    puts "Encountered an error: #{error_message}\n\n"
 end
 
 def message
-  puts "Enter message => "
+  print "Enter message => "
   message = gets.chomp
 
   if message.empty?
@@ -52,9 +58,9 @@ def main
     - SELECT CHANNEL
     - DETAILS
     - SEND MESSAGE
-    - QUIT
+    - QUIT"
 
-    Please enter a request:"
+    print "\nPlease enter a request: "
     input = gets.chomp.downcase
 
     case input
@@ -73,25 +79,27 @@ def main
       puts "You've selected '#{selected.name}'!" if selected
 
     when "details"
-      begin
+      if selected
         puts workspace.show_details(selected)
-      rescue ArgumentError
-        print "No user or channel selected."
+      else
+        puts "No user or channel selected.\n"
       end
 
     when "send message"
       begin
-        workspace.send_message(selected, message)
-      rescue ArgumentError
-        print "No user or channel selected."
+        if selected
+          workspace.send_message(selected, message)
+        else
+          puts "No user or channel selected.\n"
+        end
       rescue NoMessageError
-        print "No message entered."
+        puts "No message entered."
       rescue SlackApiError => error_message
-        print "Encountered an error: #{error_message}\n\n"
+        puts "Encountered an error: #{error_message}\n\n"
       end
 
     when "quit"
-      puts "Thank you for using the Ada Slack CLI...exiting."
+      puts "\n👋 👋 Thank you for using the Ada Slack CLI...exiting."
       exit
 
     else

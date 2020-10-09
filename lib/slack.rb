@@ -28,6 +28,18 @@ rescue ArgumentError => error_message
   puts "Encountered an error: #{error_message}\n\n"
 end
 
+def message
+  puts "Enter message => "
+  message = gets.chomp
+
+  if message.empty?
+    puts "Invalid message (no content). Please enter a VALID message or hit 'ENTER' to return to main menu. => "
+    message = gets.chomp.downcase
+  end
+
+  return message
+end
+
 def main
   puts "Welcome to the Ada Slack CLI!"
   workspace = Workspace.new
@@ -54,11 +66,11 @@ def main
 
     when "select user"
       selected = find(workspace.users, workspace)
-      puts selected.name if selected
+      puts "You've selected '#{selected.name}'!" if selected
 
     when "select channel"
       selected= find(workspace.channels, workspace)
-      puts selected.name if selected
+      puts "You've selected '#{selected.name}'!" if selected
 
     when "details"
       begin
@@ -66,6 +78,18 @@ def main
       rescue ArgumentError
         print "No user or channel selected."
       end
+
+    when "send message"
+      begin
+        workspace.send_message(selected, message)
+      rescue ArgumentError
+        print "No user or channel selected."
+      rescue NoMessageError
+        print "No message entered."
+      rescue SlackApiError => error_message
+        print "Encountered an error: #{error_message}\n\n"
+      end
+
     when "quit"
       puts "Thank you for using the Ada Slack CLI...exiting."
       exit

@@ -2,7 +2,7 @@ require 'dotenv'
 Dotenv.load
 
 class SlackApiError < StandardError; end
-
+class NoMessageError < StandardError; end
 
 class Recipient
   attr_reader :id, :name
@@ -26,7 +26,7 @@ class Recipient
   CHAT_URL = "https://slack.com/api/chat.postMessage"
   BOT_API_KEY = ENV["SLACK_BOT_API_TOKEN"]
   def send_message(message)
-    raise ArgumentError if message.nil?
+    raise NoMessageError, "No message to send." if message.nil? || message.empty?
 
     response = HTTParty.post(CHAT_URL,
                              headers: { 'Content-Type' => 'application/x-www-form-urlencoded' },

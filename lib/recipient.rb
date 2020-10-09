@@ -1,4 +1,7 @@
 require 'dotenv'
+require 'json'
+
+# require_relative '../lib/bot_settings.json'
 Dotenv.load
 
 class SlackApiError < StandardError; end
@@ -28,12 +31,17 @@ class Recipient
   def send_message(message)
     raise ArgumentError if message.nil?
 
+    settings_json = File.read("../bot_settings.json")
+    settings = JSON.parse(settings_json)
+
     response = HTTParty.post(CHAT_URL,
                              headers: { 'Content-Type' => 'application/x-www-form-urlencoded' },
                              body:{
                                  token: BOT_API_KEY,
                                  channel: self.id,
-                                 text: message
+                                 text: message,
+                                 icon_emoji: settings["icon_emoji"],
+                                 username: settings["username"]
                              })
 
     raise SlackApiError, "Error occurred when sending #{message} to #{self.name}: #{response.parsed_response["error"]}" unless response.parsed_response["ok"]
@@ -49,3 +57,4 @@ class Recipient
     raise NotImplementedError, 'Implement me in a child class!'
   end
 end
+

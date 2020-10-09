@@ -1,5 +1,6 @@
 require 'httparty'
 require 'table_print'
+require 'json'
 
 require_relative 'workspace'
 
@@ -28,6 +29,36 @@ rescue ArgumentError => error_message
   puts "Encountered an error: #{error_message}\n\n"
 end
 
+def change_settings
+  puts "Do you want to change username or emoji?"
+  input = gets.chomp.downcase
+
+  if input == "username"
+    print "Enter new username: "
+    settings = gets.chomp
+    tempHash = {
+        "icon_emoji": nil,
+        "username": settings
+    }
+
+  elsif input == "emoji"
+    print "Enter new emoji: "
+    settings = gets.chomp
+    tempHash = {
+        "icon_emoji": settings,
+        "username": nil
+    }
+  end
+
+  {
+      "icon_emoji": settings
+  }
+
+  File.open("../bot_settings.json") do |file|
+    file.write(settings.to_json)
+  end
+end
+
 def main
   puts "Welcome to the Ada Slack CLI!"
   workspace = Workspace.new
@@ -40,6 +71,7 @@ def main
     - SELECT CHANNEL
     - DETAILS
     - SEND MESSAGE
+    - CHANGE SETTINGS
     - QUIT
 
     Please enter a request:"
@@ -66,6 +98,8 @@ def main
       rescue ArgumentError
         print "No user or channel selected."
       end
+    when "change settings"
+
     when "quit"
       puts "Thank you for using the Ada Slack CLI...exiting."
       exit

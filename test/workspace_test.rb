@@ -84,7 +84,7 @@ describe "Workspace class" do
     end
   end
 
-  describe "show details" do
+  describe "show_details" do
     it "returns details" do
       details = @workspace.show_details(@users[1])
 

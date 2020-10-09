@@ -50,7 +50,7 @@ describe "Recipient class" do
       VCR.use_cassette("nil message") do
         expect{
           @recipient.send_message(nil)
-        }.must_raise ArgumentError
+        }.must_raise NoMessageError
       end
     end
   end

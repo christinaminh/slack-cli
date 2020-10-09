@@ -5,7 +5,7 @@ require 'json'
 Dotenv.load
 
 class SlackApiError < StandardError; end
-
+class NoMessageError < StandardError; end
 
 class Recipient
   attr_reader :id, :name
@@ -29,7 +29,7 @@ class Recipient
   CHAT_URL = "https://slack.com/api/chat.postMessage"
   BOT_API_KEY = ENV["SLACK_BOT_API_TOKEN"]
   def send_message(message)
-    raise ArgumentError if message.nil?
+    raise NoMessageError, "No message to send." if message.nil? || message.empty?
 
     settings_json = File.read("../bot_settings.json")
     settings = JSON.parse(settings_json)

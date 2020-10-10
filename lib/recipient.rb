@@ -31,7 +31,7 @@ class Recipient
   def send_message(message)
     raise NoMessageError, "No message to send." if message.nil? || message.empty?
 
-    settings_json = File.read("../bot_settings.json")
+    settings_json = File.read("bot_settings.json")
     settings = JSON.parse(settings_json)
 
     response = HTTParty.post(CHAT_URL,

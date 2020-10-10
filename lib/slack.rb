@@ -48,33 +48,27 @@ def message
 end
 
 def change_settings
+  settings_json = File.read("bot_settings.json")
+  settings = JSON.parse(settings_json)
+
   puts "Do you want to change username or emoji?"
   input = gets.chomp.downcase
 
   if input == "username"
     print "Enter new username: "
-    settings = gets.chomp
-    tempHash = {
-        "icon_emoji": nil,
-        "username": settings
-    }
+    new_setting = gets.chomp
+
+    settings["username"] = new_setting
+    File.write("bot_settings.json", settings.to_json)
 
   elsif input == "emoji"
     print "Enter new emoji: "
-    settings = gets.chomp
-    tempHash = {
-        "icon_emoji": settings,
-        "username": nil
-    }
+    new_setting = gets.chomp
+
+    settings["icon_emoji"] = new_setting
+    File.write("bot_settings.json", settings.to_json)
   end
 
-  {
-      "icon_emoji": settings
-  }
-
-  File.open("../bot_settings.json") do |file|
-    file.write(settings.to_json)
-  end
 end
 
 def main
@@ -117,7 +111,7 @@ def main
         puts "No user or channel selected.\n"
       end
     when "change settings"
-
+      change_settings
     when "send message"
       begin
         if selected

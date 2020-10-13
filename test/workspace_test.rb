@@ -33,14 +33,14 @@ describe "Workspace class" do
 
     it "contains correct number of users instances" do
       num_of_users = @workspace.users.length
-      expected_num_of_users = 162
+      expected_num_of_users = 167
 
       expect(num_of_users).must_equal expected_num_of_users
     end
 
     it "contains correct number of channel instances" do
       num_of_channels = @workspace.channels.length
-      expected_num_of_channels = 48
+      expected_num_of_channels = 52
 
       expect(num_of_channels).must_equal expected_num_of_channels
     end
@@ -86,46 +86,48 @@ describe "Workspace class" do
 
   describe "show_details" do
     it "returns details" do
-      details = @workspace.show_details(@users[1])
+      @workspace.select(dataset: @users, name: "jane")
+      details = @workspace.show_details
 
       expect(details).must_be_kind_of String
       expect(details).must_include "U015QQ2BXFZ" && "jane" && "Jane Park"
     end
 
-    it "will raise an ArgumentError if no User/Channel instance is passed" do
+    it "will raise an ArgumentError if no user/channel selected" do
       expect{
-        @workspace.show_details("String")
+        @workspace.show_details
       }.must_raise ArgumentError
     end
 
-    it "will raise an ArgumentError if User/Channel instance is nil" do
-      expect{
-        @workspace.show_details(nil)
-      }.must_raise ArgumentError
-    end
   end
 
   # Cases where message is nil or user/channel doesn't exist has been tested in recipient_test.rb
-  describe "send_message(instance, message)" do
+  describe "send_message(message)" do
 
     it "send a message to the correct user/channel" do
       VCR.use_cassette("Workspace_send_message") do
-        test_channel2 = @workspace.select(dataset: @channels, id: "C01ABK51G14")
-        channel_post_response = @workspace.send_message(test_channel2,"helloooo")
+        @workspace.select(dataset: @channels, id: "C01ABK51G14") # Selects test-channel2
+        channel_post_response = @workspace.send_message("helloooo")
 
         expect(channel_post_response).must_equal true
 
-        christina = @workspace.select(dataset: @users, name: "christina.minh")
-        user_post_response = @workspace.send_message(christina, "helloooo")
+        @workspace.select(dataset: @users, name: "christina.minh")
+        user_post_response = @workspace.send_message("helloooo")
 
         expect(user_post_response).must_equal true
       end
     end
 
-    it "raises ArgumentError if instance isn't of User or Channel" do
-      VCR.use_cassette("bad_recipient") do
+    it "raises ArgumentError if message is an empty string or nil" do
+      VCR.use_cassette("empty string message") do
         expect{
-          @workspace.send_message("String", "Some message")
+          @workspace.send_message("")
+        }.must_raise ArgumentError
+      end
+
+      VCR.use_cassette("no message") do
+        expect{
+          @workspace.send_message(nil)
         }.must_raise ArgumentError
       end
     end

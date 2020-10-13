@@ -1,6 +1,7 @@
 require 'simplecov'
 SimpleCov.start do
   add_filter 'test/'
+  add_filter 'lib/slack.rb'
 end
 
 require 'minitest'
@@ -9,13 +10,13 @@ require 'minitest/reporters'
 require 'minitest/skip_dsl'
 require 'vcr'
 require "webmock/minitest"
+require 'httparty'
 
 
 Minitest::Reporters.use! Minitest::Reporters::SpecReporter.new
 
 # Require_relative your lib files here!
 require_relative '../lib/workspace'
-require_relative '../lib/slack'
 
 
 VCR.configure do |config|

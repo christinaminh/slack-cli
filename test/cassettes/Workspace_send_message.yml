@@ -5,7 +5,7 @@ http_interactions:
     uri: https://slack.com/api/chat.postMessage
     body:
       encoding: UTF-8
-      string: token=SLACK_BOT_API_TOKEN&channel=C01ABK51G14&text=helloooo
+      string: token=SLACK_BOT_API_TOKEN&channel=C01ABK51G14&text=helloooo&icon_emoji=%3Asparkle%3A&username=bot
     headers:
       Content-Type:
       - application/x-www-form-urlencoded
@@ -21,13 +21,13 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Thu, 08 Oct 2020 22:06:48 GMT
+      - Tue, 13 Oct 2020 18:37:37 GMT
       Server:
       - Apache
       X-Slack-Req-Id:
-      - 2277b9ed638248c175d3f4fdfeaaa75e
+      - 717e5bd1220702f019dd7b4c51a5d195
       X-Oauth-Scopes:
-      - chat:write
+      - chat:write,chat:write.customize
       Access-Control-Expose-Headers:
       - x-slack-req-id, retry-after
       Access-Control-Allow-Origin:
@@ -56,22 +56,21 @@ http_interactions:
       Referrer-Policy:
       - no-referrer
       Content-Length:
-      - '342'
+      - '239'
       Content-Type:
       - application/json; charset=utf-8
       X-Via:
-      - haproxy-www-49bf,haproxy-edge-pdx-9tv4
+      - haproxy-www-p1c0,haproxy-edge-pdx-1nke
     body:
       encoding: ASCII-8BIT
-      string: '{"ok":true,"channel":"C01ABK51G14","ts":"1602194808.009300","message":{"bot_id":"B01BKMU6WTZ","type":"message","text":"helloooo","user":"U01CQ9K1AQG","ts":"1602194808.009300","team":"T016J51T03T","bot_profile":{"id":"B01BKMU6WTZ","deleted":false,"name":"Earth
-        - Christina - API Project","updated":1601937566,"app_id":"A01C0DY563C","icons":{"image_36":"https:\/\/a.slack-edge.com\/80588\/img\/plugins\/app\/bot_36.png","image_48":"https:\/\/a.slack-edge.com\/80588\/img\/plugins\/app\/bot_48.png","image_72":"https:\/\/a.slack-edge.com\/80588\/img\/plugins\/app\/service_72.png"},"team_id":"T016J51T03T"}}}'
-  recorded_at: Thu, 08 Oct 2020 22:06:48 GMT
+      string: '{"ok":true,"channel":"C01ABK51G14","ts":"1602614257.023100","message":{"type":"message","subtype":"bot_message","text":"helloooo","ts":"1602614257.023100","username":"bot","icons":{"emoji":":sparkle:","image_64":"https:\/\/a.slack-edge.com\/80588\/img\/emoji_2017_12_06\/apple\/2747-fe0f.png"},"bot_id":"B01BKMU6WTZ"}}'
+  recorded_at: Tue, 13 Oct 2020 18:37:37 GMT
 - request:
     method: post
     uri: https://slack.com/api/chat.postMessage
     body:
       encoding: UTF-8
-      string: token=SLACK_BOT_API_TOKEN&channel=U017A6G9ACD&text=helloooo
+      string: token=SLACK_BOT_API_TOKEN&channel=U017A6G9ACD&text=helloooo&icon_emoji=%3Asparkle%3A&username=bot
     headers:
       Content-Type:
       - application/x-www-form-urlencoded
@@ -87,13 +86,13 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Thu, 08 Oct 2020 22:06:48 GMT
+      - Tue, 13 Oct 2020 18:37:37 GMT
       Server:
       - Apache
       X-Slack-Req-Id:
-      - eb0c9a09460cf4a8c28fec5cabee9eb4
+      - 29c762ec0e47785611a5f11df1d20775
       X-Oauth-Scopes:
-      - chat:write
+      - chat:write,chat:write.customize
       Access-Control-Expose-Headers:
       - x-slack-req-id, retry-after
       Access-Control-Allow-Origin:
@@ -122,14 +121,13 @@ http_interactions:
       Referrer-Policy:
       - no-referrer
       Content-Length:
-      - '342'
+      - '237'
       Content-Type:
       - application/json; charset=utf-8
       X-Via:
-      - haproxy-www-9rc7,haproxy-edge-pdx-paag
+      - haproxy-www-z9gt,haproxy-edge-pdx-fil8
     body:
       encoding: ASCII-8BIT
-      string: '{"ok":true,"channel":"D01C29PDFK8","ts":"1602194808.000300","message":{"bot_id":"B01BKMU6WTZ","type":"message","text":"helloooo","user":"U01CQ9K1AQG","ts":"1602194808.000300","team":"T016J51T03T","bot_profile":{"id":"B01BKMU6WTZ","deleted":false,"name":"Earth
-        - Christina - API Project","updated":1601937566,"app_id":"A01C0DY563C","icons":{"image_36":"https:\/\/a.slack-edge.com\/80588\/img\/plugins\/app\/bot_36.png","image_48":"https:\/\/a.slack-edge.com\/80588\/img\/plugins\/app\/bot_48.png","image_72":"https:\/\/a.slack-edge.com\/80588\/img\/plugins\/app\/service_72.png"},"team_id":"T016J51T03T"}}}'
-  recorded_at: Thu, 08 Oct 2020 22:06:49 GMT
+      string: '{"ok":true,"channel":"D0174RC5806","ts":"1602614257.000100","message":{"type":"message","subtype":"bot_message","text":"helloooo","ts":"1602614257.000100","username":"bot","icons":{"emoji":":sparkle:","image_64":"https:\/\/a.slack-edge.com\/80588\/img\/emoji_2017_12_06\/apple\/2747-fe0f.png"},"bot_id":"B01BKMU6WTZ"}}'
+  recorded_at: Tue, 13 Oct 2020 18:37:37 GMT
 recorded_with: VCR 6.0.0

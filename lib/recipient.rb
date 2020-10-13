@@ -19,11 +19,9 @@ class Recipient
   def self.get(url)
     response = HTTParty.get(url, query: { token: API_KEY })
 
-    unless response.parsed_response["ok"]
-      raise SlackApiError.new(response["error"])
-    else
-      return response
-    end
+    raise SlackApiError.new(response["error"]) unless response.parsed_response["ok"]
+
+    return response
   end
 
   CHAT_URL = "https://slack.com/api/chat.postMessage"

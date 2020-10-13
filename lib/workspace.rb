@@ -11,8 +11,8 @@ class Workspace
   end
 
   def select(dataset: , id: nil, name: nil)
-    match =  dataset.find do |user|
-      user.id == id || user.name == name
+    match =  dataset.find do |recipient|
+      recipient.id == id || recipient.name == name
     end
 
     raise ArgumentError.new ("User not found.") if match == nil && dataset == users

@@ -46,11 +46,32 @@ describe "Recipient class" do
       end
     end
 
-    it "will raise an ArgumentError if message is an empty string" do
-      VCR.use_cassette("nil message") do
+    it "raises a NoMessageError if message is an empty string" do
+      VCR.use_cassette("empty string") do
+        @workspace.select(dataset: @users, name: "christina.minh")
+
         expect{
-          @recipient.send_message(nil)
+          @recipient.send_message("")
         }.must_raise NoMessageError
+      end
+    end
+
+    it "raises a NoMessageError if message is nil" do
+      @workspace.select(dataset: @users, name: "christina.minh")
+
+      VCR.use_cassette("no message") do
+        expect{
+          @workspace.send_message(nil)
+        }.must_raise NoMessageError
+      end
+    end
+
+    it "raises an ArgumentError if no user/channel selected" do
+
+      VCR.use_cassette("no user or channel selected") do
+        expect{
+          @workspace.send_message("message to no one")
+        }.must_raise ArgumentError
       end
     end
   end
@@ -70,7 +91,4 @@ describe "Recipient class" do
       }.must_raise NotImplementedError
     end
   end
-
-
-
 end

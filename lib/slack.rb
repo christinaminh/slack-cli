@@ -97,16 +97,16 @@ def main
       tp workspace.channels, "id", "name", "topic", "member_count"
 
     when "select user"
-      selected = find(workspace.users, workspace)
-      puts "You've selected '#{selected.name}'!" if selected
+      find(workspace.users, workspace)
+      puts "You've selected '#{workspace.selected.name}'!" unless workspace.selected.nil?
 
     when "select channel"
-      selected= find(workspace.channels, workspace)
-      puts "You've selected '#{selected.name}'!" if selected
+      find(workspace.channels, workspace)
+      puts "You've selected '#{workspace.selected.name}'!" unless workspace.selected.nil?
 
     when "details"
-      if selected
-        puts workspace.show_details(selected)
+      if workspace.selected
+        puts workspace.show_details
       else
         puts "No user or channel selected.\n"
       end
@@ -114,8 +114,8 @@ def main
       change_settings
     when "send message"
       begin
-        if selected
-          workspace.send_message(selected, message)
+        if workspace.selected
+          workspace.send_message(message)
         else
           puts "No user or channel selected.\n"
         end

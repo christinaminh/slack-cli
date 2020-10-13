@@ -118,18 +118,5 @@ describe "Workspace class" do
       end
     end
 
-    it "raises ArgumentError if message is an empty string or nil" do
-      VCR.use_cassette("empty string message") do
-        expect{
-          @workspace.send_message("")
-        }.must_raise ArgumentError
-      end
-
-      VCR.use_cassette("no message") do
-        expect{
-          @workspace.send_message(nil)
-        }.must_raise ArgumentError
-      end
-    end
   end
 end

@@ -23,9 +23,7 @@ class User < Recipient
   end
 
   def details
-    return "\nSlack ID: #{self.id}
-    Username: #{self.name}
-    Real Name: #{self.real_name}"
+    return "\nSlack ID: #{self.id}\nUsername: #{self.name}\nReal Name: #{self.real_name}"
   end
 
 end
